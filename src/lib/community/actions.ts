@@ -2,10 +2,16 @@
 
 import { revalidatePath } from "next/cache";
 import { createSupabaseServerClient } from "@/lib/supabase/server";
-import type { ReactionType } from "@/lib/supabase/types";
+import type { Database, ReactionType } from "@/lib/supabase/types";
 import { REACTION_TYPES } from "./types";
 
 type ActionResult = { ok: true; id?: string } | { ok: false; error: string };
+
+type PostInsert = Database["public"]["Tables"]["community_posts"]["Insert"];
+type PostUpdate = Database["public"]["Tables"]["community_posts"]["Update"];
+type ReactionInsert = Database["public"]["Tables"]["post_reactions"]["Insert"];
+type ReportInsert = Database["public"]["Tables"]["post_reports"]["Insert"];
+type ReportUpdate = Database["public"]["Tables"]["post_reports"]["Update"];
 
 export async function createPost(input: {
   body: string;
@@ -50,13 +56,13 @@ export async function createPost(input: {
       cohort_id: m.cohort_id,
       body,
       week_number: input.weekNumber ?? null,
-    })
+    } as PostInsert)
     .select("id")
     .single();
 
   if (error) return { ok: false, error: error.message };
   revalidatePath("/community");
-  return { ok: true, id: data.id };
+  return { ok: true, id: (data as { id: string }).id };
 }
 
 export async function toggleReaction(
@@ -91,7 +97,7 @@ export async function toggleReaction(
   } else {
     const { error } = await supabase
       .from("post_reactions")
-      .insert({ user_id: user.id, post_id: postId, reaction });
+      .insert({ user_id: user.id, post_id: postId, reaction } as ReactionInsert);
     if (error) return { ok: false, error: error.message };
   }
   revalidatePath("/community");
@@ -112,7 +118,7 @@ export async function reportPost(
     post_id: postId,
     reporter_id: user.id,
     reason: reason || null,
-  });
+  } as ReportInsert);
   if (error) return { ok: false, error: error.message };
   revalidatePath("/community");
   return { ok: true };
@@ -132,14 +138,18 @@ export async function hidePost(
   // RLS enforces leader scope — we don't re-check here.
   const { error } = await supabase
     .from("community_posts")
-    .update({ is_hidden: true, hidden_reason: hiddenReason })
+    .update({ is_hidden: true, hidden_reason: hiddenReason } as PostUpdate)
     .eq("id", postId);
   if (error) return { ok: false, error: error.message };
 
   // Resolve pending reports
   await supabase
     .from("post_reports")
-    .update({ resolved: true, resolved_by: user.id, resolved_at: new Date().toISOString() })
+    .update({
+      resolved: true,
+      resolved_by: user.id,
+      resolved_at: new Date().toISOString(),
+    } as ReportUpdate)
     .eq("post_id", postId)
     .eq("resolved", false);
 
@@ -157,7 +167,11 @@ export async function dismissReports(postId: string): Promise<ActionResult> {
   if (!user) return { ok: false, error: "Sign in first." };
   const { error } = await supabase
     .from("post_reports")
-    .update({ resolved: true, resolved_by: user.id, resolved_at: new Date().toISOString() })
+    .update({
+      resolved: true,
+      resolved_by: user.id,
+      resolved_at: new Date().toISOString(),
+    } as ReportUpdate)
     .eq("post_id", postId)
     .eq("resolved", false);
   if (error) return { ok: false, error: error.message };
