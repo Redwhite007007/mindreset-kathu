@@ -1,0 +1,56 @@
+# deps
+node_modules
+.pnp
+.pnp.*
+.yarn/*
+!.yarn/patches
+!.yarn/plugins
+!.yarn/releases
+!.yarn/versions
+
+# testing / coverage
+coverage
+
+# next.js
+.next
+out
+next-env.d.ts
+
+# misc
+.DS_Store
+*.pem
+Thumbs.db
+
+# debug
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.pnpm-debug.log*
+
+# env files
+.env
+.env.*.local
+.env.local
+.env.development
+.env.production
+!.env.example
+
+# vercel
+.vercel
+
+# typescript
+*.tsbuildinfo
+
+# supabase
+supabase/.branches
+supabase/.temp
+supabase/.env
+
+# ide
+.idea
+.vscode/*
+!.vscode/settings.json
+!.vscode/extensions.json
+
+# PDF extraction output (kept under docs/ for reproducibility, not secret)
+# (no entry — we WANT docs/_pdf-raw.txt tracked for diffing)

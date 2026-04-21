@@ -1,0 +1,59 @@
+@import "tailwindcss";
+
+@theme {
+  /* Brand tokens — electric blue → neon green → sunset orange accent stack */
+  --color-reboot-bg: #0B1020;
+  --color-reboot-surface: #141B33;
+  --color-reboot-surface-2: #1C2445;
+  --color-reboot-text: #F5F7FF;
+  --color-reboot-muted: #94A2C2;
+  --color-reboot-electric: #00f0ff;
+  --color-reboot-neon: #00ff88;
+  --color-reboot-sunset: #ff8800;
+  --color-reboot-flame: #FB7185;
+  --color-reboot-violet: #A78BFA;
+  --color-reboot-warning: #F59E0B;
+  --color-reboot-danger: #EF4444;
+
+  --font-sans: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+}
+
+html,
+body {
+  background: var(--color-reboot-bg);
+  color: var(--color-reboot-text);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+html {
+  color-scheme: dark;
+}
+
+body {
+  min-height: 100dvh;
+  overscroll-behavior-y: contain;
+}
+
+/* Safe space below fixed bottom nav */
+.has-bottom-nav {
+  padding-bottom: calc(5.5rem + env(safe-area-inset-bottom));
+}
+
+/* Respect reduced-motion prefs site-wide */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+::selection {
+  background: var(--color-reboot-electric);
+  color: white;
+}

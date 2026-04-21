@@ -1,0 +1,52 @@
+{
+  "name": "mindreset-kathu",
+  "version": "0.1.0",
+  "private": true,
+  "description": "A 7-week youth discipleship PWA for CRC Kathu (Northern Cape). Reset your brain, one minute at a time.",
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint",
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "check": "npm run typecheck && npm run lint",
+    "db:types": "supabase gen types typescript --local > src/lib/supabase/types.ts",
+    "db:reset": "supabase db reset",
+    "db:push": "supabase db push"
+  },
+  "dependencies": {
+    "@supabase/ssr": "^0.5.2",
+    "@supabase/supabase-js": "^2.45.4",
+    "canvas-confetti": "^1.9.3",
+    "clsx": "^2.1.1",
+    "idb": "^8.0.0",
+    "lucide-react": "^0.456.0",
+    "motion": "^11.11.17",
+    "next": "15.0.3",
+    "react": "19.0.0-rc-66855b96-20241106",
+    "react-dom": "19.0.0-rc-66855b96-20241106",
+    "tailwind-merge": "^2.5.4"
+  },
+  "devDependencies": {
+    "@tailwindcss/postcss": "^4.0.0-beta.3",
+    "@types/canvas-confetti": "^1.6.4",
+    "@types/node": "^22.9.0",
+    "@types/react": "npm:types-react@rc",
+    "@types/react-dom": "npm:types-react-dom@rc",
+    "eslint": "^9.14.0",
+    "eslint-config-next": "15.0.3",
+    "tailwindcss": "^4.0.0-beta.3",
+    "typescript": "^5.6.3",
+    "vite-tsconfig-paths": "^6.1.1",
+    "vitest": "^4.1.4"
+  },
+  "overrides": {
+    "@types/react": "npm:types-react@rc",
+    "@types/react-dom": "npm:types-react-dom@rc"
+  },
+  "engines": {
+    "node": ">=18.18"
+  }
+}
