@@ -50,7 +50,7 @@ export function JournalList() {
           Your gratitude journal awaits
         </h2>
         <p className="text-sm leading-relaxed text-[var(--color-reboot-text)]/90">
-          Start capturing the bright moments in Kathu. Write down three things you're grateful for each day — it rewires your brain for joy.
+          Start capturing the bright moments in Kathu. Write down three things you&apos;re grateful for each day — it rewires your brain for joy.
         </p>
         <Link href="/journal/new" className="inline-block">
           <Button>

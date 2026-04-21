@@ -5,7 +5,6 @@ import { useRouter } from "next/navigation";
 import {
   Save,
   Mic,
-  MicOff,
   Camera,
   X,
   Play,

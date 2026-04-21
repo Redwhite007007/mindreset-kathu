@@ -2,7 +2,6 @@ import { createSupabaseServerClient } from "@/lib/supabase/server";
 import { levelForXp } from "@/lib/gamification/levels";
 import type { FeedPost } from "./types";
 import type { ReactionType } from "@/lib/supabase/types";
-import { REACTION_TYPES } from "./types";
 
 /**
  * Load the cohort feed for the current signed-in user.
